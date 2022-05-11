@@ -34,7 +34,7 @@ size_t	ft_lstcpy_data(t_line_list *lst, char *dest)
 
 	result = 0;
 	end_cpy = 0;
-	while (!end_cpy && lst->data[result])
+	while (!end_cpy && result < BUFFER_SIZE && lst->data[result])
 	{
 		dest[result] = lst->data[result];
 		end_cpy = (lst->data[result++] == '\n');
@@ -49,7 +49,7 @@ void	ft_lstadd_data(t_line_list *lst, int fd)
 	size_t	index;
 
 	data = lst->data;
-	index = BUFFER_SIZE + 1;
+	index = BUFFER_SIZE;
 	while (index > lst->index)
 		data[--index] = '\0';
 	read_result = read(fd, &data[index], BUFFER_SIZE - index);

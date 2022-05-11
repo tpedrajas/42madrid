@@ -6,7 +6,7 @@
 /*   By: tompedra <tompedra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 21:50:14 by tompedra          #+#    #+#             */
-/*   Updated: 2022/04/19 23:17:53 by tompedra         ###   ########.fr       */
+/*   Updated: 2022/05/11 22:57:43 by tompedra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ static void	clear_line_data(t_fd_list **lst, t_fd_list *current)
 	while (last->next)
 		last = last->next;
 	last_index = 1;
-	while (last->data[last_index - 1] != '\n' && last->data[last_index])
+	while (last_index <= BUFFER_SIZE && last->data[last_index - 1] != '\n')
 		last_index++;
 	root_index = 0;
-	while (last->data[last_index])
+	while (last_index < BUFFER_SIZE && last->data[last_index])
 		current->line->data[root_index++] = last->data[last_index++];
-	current->line->data[root_index] = '\0';
+		current->line->data[root_index] = '\0';
 	current->line->index = root_index;
 	while ((*lst)->fd != current->fd && (*lst)->next)
 		lst = &(*lst)->next;
@@ -96,7 +96,7 @@ static int	exists_endl(t_line_list *lst, size_t *line_size)
 		data = lst->data;
 		index = *line_size % BUFFER_SIZE;
 		check_len = 0;
-		while (!result && data[index])
+		while (!result && index < BUFFER_SIZE && data[index])
 		{
 			check_len++;
 			result = data[index++] == '\n';

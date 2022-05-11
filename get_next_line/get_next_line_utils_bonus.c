@@ -6,7 +6,7 @@
 /*   By: tompedra <tompedra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 00:54:19 by tompedra          #+#    #+#             */
-/*   Updated: 2022/04/19 23:23:28 by tompedra         ###   ########.fr       */
+/*   Updated: 2022/05/11 22:21:58 by tompedra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ size_t	ft_lstcpy_data(t_line_list *lst, char *dest)
 
 	result = 0;
 	end_cpy = 0;
-	while (!end_cpy && lst->data[result])
+	while (!end_cpy && result < BUFFER_SIZE && lst->data[result])
 	{
 		dest[result] = lst->data[result];
 		end_cpy = lst->data[result++] == '\n';
@@ -56,7 +56,7 @@ void	ft_lstadd_data(t_line_list *lst, int fd)
 	size_t	index;
 
 	data = lst->data;
-	index = BUFFER_SIZE + 1;
+	index = BUFFER_SIZE;
 	while (index > lst->index)
 		data[--index] = '\0';
 	read_result = read(fd, &data[index], BUFFER_SIZE - index);
@@ -102,7 +102,6 @@ t_fd_list	*ft_lstget(t_fd_list **lst, int fd)
 	{
 		if (!(*lst))
 		{
-			printf("Creamos el nodo estatico\n");
 			*lst = ft_lstnew(fd);
 			result = *lst;
 		}

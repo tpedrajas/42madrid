@@ -22,10 +22,10 @@ static void	clear_line_data(t_line_list **lst)
 	while (last->next)
 		last = last->next;
 	last_index = 1;
-	while (last->data[last_index - 1] != '\n' && last->data[last_index])
+	while (last_index <= BUFFER_SIZE && last->data[last_index - 1] != '\n')
 		last_index++;
 	root_index = 0;
-	while (last->data[last_index])
+	while (last_index < BUFFER_SIZE && last->data[last_index])
 		(*lst)->data[root_index++] = last->data[last_index++];
 	(*lst)->data[root_index] = '\0';
 	(*lst)->index = root_index;
@@ -89,7 +89,7 @@ static int	exists_endl(t_line_list *lst, size_t *line_size)
 		data = lst->data;
 		index = *line_size % BUFFER_SIZE;
 		check_len = 0;
-		while (!result && data[index])
+		while (!result && index < BUFFER_SIZE && data[index])
 		{
 			check_len++;
 			result = data[index++] == '\n';
