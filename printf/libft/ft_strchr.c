@@ -6,7 +6,7 @@
 /*   By: tompedra <tompedra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 21:55:21 by tompedra          #+#    #+#             */
-/*   Updated: 2022/03/29 02:40:50 by tompedra         ###   ########.fr       */
+/*   Updated: 2022/05/13 19:11:14 by tompedra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,12 @@
 
 char	*ft_strchr(const char *s, int c)
 {
-	int			end;
-	const char	*result;
+	char	*result;
 
-	end = 0;
 	result = NULL;
-	while (!result && !end)
-	{
-		if (*s == (char)c)
-			result = s;
-		else
-		{
-			end = !*s;
-			s += !end;
-		}
-	}
-	return ((char *)result);
+	while (*s && *s != (char)c)
+		s++;
+	if (*s == (char)c)
+		result = (char *)s;
+	return (result);
 }

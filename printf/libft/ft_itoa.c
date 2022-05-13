@@ -6,24 +6,11 @@
 /*   By: tompedra <tompedra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 15:22:14 by tompedra          #+#    #+#             */
-/*   Updated: 2022/03/27 15:22:14 by tompedra         ###   ########.fr       */
+/*   Updated: 2022/05/13 21:43:28 by tompedra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-static size_t	ft_uintlen(unsigned int n)
-{
-	size_t	result;
-
-	result = !n;
-	while (n)
-	{
-		result++;
-		n /= 10;
-	}
-	return (result);
-}
 
 static void	ft_itoa_rec(char *str, unsigned int n, int index)
 {
@@ -45,7 +32,7 @@ char	*ft_itoa(int n)
 
 	sign = 1 - ((n < 0) << 1);
 	uintn = sign * n;
-	result_len = ft_uintlen(uintn) + (sign < 0);
+	result_len = ft_ullonglen_base_extra(uintn, 10) + (sign < 0);
 	result = (char *)malloc(sizeof(char) * (result_len + 1));
 	if (result)
 	{
