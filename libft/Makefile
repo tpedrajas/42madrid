@@ -6,7 +6,7 @@
 #    By: tompedra <tompedra@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/26 22:18:59 by tompedra          #+#    #+#              #
-#    Updated: 2022/05/19 01:16:16 by tompedra         ###   ########.fr        #
+#    Updated: 2022/05/19 03:18:42 by tompedra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,8 +50,6 @@ CFLAGS = -Wall -Wextra -Werror
 ARFLAGS = rcs
 
 TOUCH = touch
-
-.MAIN: libft
 
 $(NAME):	$(M_NAME)
 
