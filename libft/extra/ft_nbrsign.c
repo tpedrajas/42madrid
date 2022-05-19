@@ -1,36 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_llonglen_base_extra.c                           :+:      :+:    :+:   */
+/*   ft_nbrsign.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tompedra <tompedra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/13 20:46:47 by tompedra          #+#    #+#             */
-/*   Updated: 2022/05/13 21:50:01 by tompedra         ###   ########.fr       */
+/*   Created: 2022/05/18 18:41:44 by tompedra          #+#    #+#             */
+/*   Updated: 2022/05/18 18:49:32 by tompedra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../libft.h"
 
-int	ft_llonglen_base_extra(ssize_t n, size_t base)
+int	nbrsign(ssize_t sn)
 {
-	size_t	ullong_n;
-	int		result;
+	int	result;
 
-	if (!base)
-		result = -1;
-	else
-	{
-		if (n < 0)
-			ullong_n = -n;
-		else
-			ullong_n = n;
-		result = !ullong_n | (n < 0);
-		while (ullong_n)
-		{
-			result++;
-			ullong_n /= base;
-		}
-	}
+	result = 1 - ((sn < 0) << 1);
 	return (result);
 }
