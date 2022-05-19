@@ -6,7 +6,7 @@
 /*   By: tompedra <tompedra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 21:56:58 by tompedra          #+#    #+#             */
-/*   Updated: 2022/05/13 21:52:32 by tompedra         ###   ########.fr       */
+/*   Updated: 2022/05/18 20:28:41 by tompedra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
-int		ft_llonglen_base_extra(ssize_t n, size_t base);
-int		ft_ullonglen_base_extra(size_t n, size_t base);
+int		ft_nbrlen_base(size_t n, size_t base);
+int		ft_snbrlen_base(ssize_t sn, size_t base);
+int		ft_nbrsign(ssize_t sn);
 
 #endif

@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   ft_snbrlen_base.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tompedra <tompedra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/25 21:55:50 by tompedra          #+#    #+#             */
-/*   Updated: 2022/05/18 20:42:42 by tompedra         ###   ########.fr       */
+/*   Created: 2022/05/13 20:46:47 by tompedra          #+#    #+#             */
+/*   Updated: 2022/05/18 23:48:48 by tompedra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../libft.h"
 
-char	*ft_strrchr(char *s, int c)
+int	ft_snbrlen_base(ssize_t sn, size_t base)
 {
-	char	*s_end;
-	char	*result;
+	size_t	n;
+	int		result;
 
-	s_end = s + ft_strlen(s);
-	result = NULL;
-	while (s_end >= s && *s_end != (char)c)
-		s_end--;
-	if (s_end >= s && *s_end == (char)c)
-		result = s_end;
+	result = -1;
+	if (base)
+	{
+		n = sn * ft_nbrsign(sn);
+		result = !n + (sn < 0);
+		while (n)
+		{
+			result++;
+			n /= base;
+		}
+	}
 	return (result);
 }

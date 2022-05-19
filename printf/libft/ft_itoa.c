@@ -30,9 +30,9 @@ char	*ft_itoa(int n)
 	size_t			result_len;
 	char			*result;
 
-	sign = 1 - ((n < 0) << 1);
+	sign = ft_nbrsign(n);
 	uintn = sign * n;
-	result_len = ft_ullonglen_base_extra(uintn, 10) + (sign < 0);
+	result_len = ft_snbrlen_base(uintn, 10) + (sign < 0);
 	result = (char *)malloc(sizeof(char) * (result_len + 1));
 	if (result)
 	{

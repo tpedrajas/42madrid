@@ -6,7 +6,7 @@
 /*   By: tompedra <tompedra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 16:53:07 by tompedra          #+#    #+#             */
-/*   Updated: 2022/05/13 22:16:08 by tompedra         ###   ########.fr       */
+/*   Updated: 2022/05/18 20:26:25 by tompedra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int	ft_combine_str_param(const char *param, const char format)
 	{
 		if (!param)
 			str_result = "(null)";
-		result = strlen(str_param);
+		result = strlen(str_result);
 	}
-	write(1, str_param, result);
+	write(1, str_result, result);
 	return (result);
 }
 

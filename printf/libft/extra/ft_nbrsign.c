@@ -1,27 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   ft_nbrsign.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tompedra <tompedra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/25 21:55:50 by tompedra          #+#    #+#             */
-/*   Updated: 2022/05/18 20:42:42 by tompedra         ###   ########.fr       */
+/*   Created: 2022/05/18 18:41:44 by tompedra          #+#    #+#             */
+/*   Updated: 2022/05/18 18:49:32 by tompedra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../libft.h"
 
-char	*ft_strrchr(char *s, int c)
+int	nbrsign(ssize_t sn)
 {
-	char	*s_end;
-	char	*result;
+	int	result;
 
-	s_end = s + ft_strlen(s);
-	result = NULL;
-	while (s_end >= s && *s_end != (char)c)
-		s_end--;
-	if (s_end >= s && *s_end == (char)c)
-		result = s_end;
+	result = 1 - ((sn < 0) << 1);
 	return (result);
 }

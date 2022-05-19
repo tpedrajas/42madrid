@@ -6,7 +6,7 @@
 #    By: tompedra <tompedra@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/25 19:48:35 by tompedra          #+#    #+#              #
-#    Updated: 2022/05/13 23:14:29 by tompedra         ###   ########.fr        #
+#    Updated: 2022/05/19 03:20:37 by tompedra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,9 +34,7 @@ CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror
 
-AR = ar rcs
-
-RM = rm -f
+ARFLAGS = rcs
 
 TOUCH = touch
 
@@ -44,13 +42,13 @@ $(NAME):	$(M_NAME)
 
 $(M_NAME):	$(OBJS)
 		make -C $(LIBFT_ROUTE)
-		$(AR) $(LIBNAME) $(OBJS)
+		$(AR) $(ARFLAGS) $(LIBNAME) $(OBJS)
 		$(RM) $(B_NAME)
 		$(TOUCH) $(M_NAME)
 
 $(B_NAME):	$(B_OBJS)
 		make bonus -C $(LIBFT_ROUTE)
-		$(AR) $(LIBNAME) $(B_OBJS)
+		$(AR) $(ARFLAGS) $(LIBNAME) $(B_OBJS)
 		$(RM) $(M_NAME)
 		$(TOUCH) $(B_NAME)
 

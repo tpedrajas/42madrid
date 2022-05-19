@@ -6,11 +6,11 @@
 #    By: tompedra <tompedra@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/26 22:18:59 by tompedra          #+#    #+#              #
-#    Updated: 2022/05/13 21:51:00 by tompedra         ###   ########.fr        #
+#    Updated: 2022/05/19 03:18:42 by tompedra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-E_SRCS = ft_llonglen_base_extra.c ft_ullonglen_base_extra.c
+E_SRCS = extra/ft_nbrlen_base.c extra/ft_snbrlen_base.c extra/ft_nbrsign.c
 
 M_SRCS = ft_isalpha.c ft_isdigit.c ft_isalnum.c\
 		 ft_isascii.c ft_isprint.c ft_strlen.c\
@@ -47,21 +47,19 @@ CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror
 
-AR = ar rcs
-
-RM = rm -f
+ARFLAGS = rcs
 
 TOUCH = touch
 
 $(NAME):	$(M_NAME)
 
 $(M_NAME):	$(M_OBJS)
-		$(AR) $(LIBNAME) $(M_OBJS)
+		$(AR) $(ARFLAGS) $(LIBNAME) $(M_OBJS)
 		$(RM) $(B_NAME)
 		$(TOUCH) $(M_NAME)
 
 $(B_NAME):	$(B_OBJS)
-		$(AR) $(LIBNAME) $(B_OBJS)
+		$(AR) $(ARFLAGS) $(LIBNAME) $(B_OBJS)
 		$(RM) $(M_NAME)
 		$(TOUCH) $(B_NAME)
 
