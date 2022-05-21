@@ -32,7 +32,7 @@ char	*ft_itoa(int n)
 
 	sign = ft_nbrsign(n);
 	uintn = sign * n;
-	result_len = ft_snbrlen_base(uintn, 10) + (sign < 0);
+	result_len = ft_nbrlen_base(uintn, 10) + (sign < 0);
 	result = (char *)malloc(sizeof(char) * (result_len + 1));
 	if (result)
 	{

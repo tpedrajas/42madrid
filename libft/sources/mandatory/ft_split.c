@@ -6,7 +6,7 @@
 /*   By: tompedra <tompedra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 20:51:54 by tompedra          #+#    #+#             */
-/*   Updated: 2022/04/19 23:48:20 by tompedra         ###   ########.fr       */
+/*   Updated: 2022/05/22 00:30:05 by tompedra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static size_t	ft_count_words(char const *s, char c)
 	{
 		while (*s == c)
 			s++;
-		result += *s != 0;
+		result += (*s != '\0');
 		while (*s && *s != c)
 			s++;
 	}

@@ -6,7 +6,7 @@
 /*   By: tompedra <tompedra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 21:56:58 by tompedra          #+#    #+#             */
-/*   Updated: 2022/05/20 23:13:19 by tompedra         ###   ########.fr       */
+/*   Updated: 2022/05/22 00:57:40 by tompedra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,6 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 int		ft_nbrlen_base(size_t n, size_t base);
 int		ft_snbrlen_base(ssize_t sn, size_t base);
 int		ft_nbrsign(ssize_t sn);
+char	*ft_ltoa(long n);
 
 #endif
