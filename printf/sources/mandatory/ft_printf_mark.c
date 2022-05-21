@@ -6,19 +6,11 @@
 /*   By: tompedra <tompedra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 21:08:05 by tompedra          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/05/21 23:24:16 by tompedra         ###   ########.fr       */
+/*   Updated: 2022/05/21 00:15:59 by tompedra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
-=======
-/*   Updated: 2022/05/19 23:48:01 by tompedra         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "ft_printf.h"
->>>>>>> b8e5cdc60d0aa779e2023b6d56733125768d2d50
 
 static int	ft_process_mark_flags(const char *format, t_mark *mark)
 {
@@ -60,17 +52,6 @@ static int	ft_process_mark_precision(const char *format)
 	return (0);
 }
 
-<<<<<<< HEAD
-int	ft_process_mark(const char *format, va_list args)
-{
-	t_mark	mark;
-	int		result;
-
-	result = 0;
-	mark.data = NULL;
-
-	ft_process_mark_type(*format, &mark, args);
-=======
 static int	ft_process_mark_type(const char format, t_mark *mark, va_list args)
 {
 	int	result;
@@ -103,7 +84,6 @@ t_mark *ft_process_mark(const char *format, va_list args)
 	t_mark	*result;
 
 	result = (t_mark *)malloc(sizeof(t_mark*) * 1);
->>>>>>> b8e5cdc60d0aa779e2023b6d56733125768d2d50
 	if (result)
 	{
 		//ft_process_mark_flags(format, result);

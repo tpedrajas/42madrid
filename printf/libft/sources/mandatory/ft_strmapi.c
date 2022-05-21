@@ -26,7 +26,11 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 			index = -1;
 			while (s[++index])
 				result[index] = f(index, s[index]);
+<<<<<<< HEAD
 			result[index] = '\0';
+=======
+			result[index] = 0;
+>>>>>>> b8e5cdc60d0aa779e2023b6d56733125768d2d50
 		}
 	}
 	return (result);

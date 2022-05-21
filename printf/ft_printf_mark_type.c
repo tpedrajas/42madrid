@@ -6,6 +6,7 @@
 /*   By: tompedra <tompedra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 16:53:07 by tompedra          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/05/22 01:03:30 by tompedra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -38,12 +39,49 @@ static char	*ft_process_nbr_type(long param)
 }
 
 static char	*ft_process_hex_type(size_t param, const char format)
+=======
+/*   Updated: 2022/05/19 22:39:55 by tompedra         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_printf.h"
+
+char	*ft_get_str_datatype(const char *param, const char format)
+{
+	char	*str_result;
+	int		result;
+
+	str_result = param;
+	result = -1;
+	if (format == 'c')
+		result = 1;
+	if (format == 's')
+	{
+		if (!param)
+			str_result = "(null)";
+		result = strlen(str_result);
+	}
+	write(1, str_result, result);
+	return (result);
+}
+
+char	*ft_get_nbr_datatype(size_t param)
+{
+	int	result;
+
+	result = ft_nbrlen_base_extra(param, 10);
+	return (0);
+}
+
+char	*ft_get_hex_datatype(size_t param, const char format)
+>>>>>>> b8e5cdc60d0aa779e2023b6d56733125768d2d50
 {
 	int	result;
 
 	result = ft_nbrlen_base_extra(param, 16);
 	return (0);
 }
+<<<<<<< HEAD
 
 char	*ft_process_mark_type(const char format, va_list args)
 {
@@ -66,3 +104,5 @@ char	*ft_process_mark_type(const char format, va_list args)
 		result = ft_process_str_type("%");
 	return (result);
 }
+=======
+>>>>>>> b8e5cdc60d0aa779e2023b6d56733125768d2d50
