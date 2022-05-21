@@ -6,7 +6,7 @@
 /*   By: tompedra <tompedra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 21:50:14 by tompedra          #+#    #+#             */
-/*   Updated: 2022/05/11 22:57:43 by tompedra         ###   ########.fr       */
+/*   Updated: 2022/05/22 01:44:19 by tompedra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	clear_line_data(t_fd_list **lst, t_fd_list *current)
 	root_index = 0;
 	while (last_index < BUFFER_SIZE && last->data[last_index])
 		current->line->data[root_index++] = last->data[last_index++];
-		current->line->data[root_index] = '\0';
+	current->line->data[root_index] = '\0';
 	current->line->index = root_index;
 	while ((*lst)->fd != current->fd && (*lst)->next)
 		lst = &(*lst)->next;

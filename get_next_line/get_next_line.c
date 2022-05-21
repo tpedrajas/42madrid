@@ -92,7 +92,7 @@ static int	exists_endl(t_line_list *lst, size_t *line_size)
 		while (!result && index < BUFFER_SIZE && data[index])
 		{
 			check_len++;
-			result = data[index++] == '\n';
+			result = (data[index++] == '\n');
 		}
 		*line_size += check_len;
 	}

@@ -6,7 +6,7 @@
 /*   By: tompedra <tompedra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 19:12:47 by tompedra          #+#    #+#             */
-/*   Updated: 2022/04/19 23:36:13 by tompedra         ###   ########.fr       */
+/*   Updated: 2022/05/22 01:27:09 by tompedra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 
 typedef struct s_line_list
 {
-	char				data[BUFFER_SIZE + 1];
+	char				data[BUFFER_SIZE];
 	struct s_line_list	*next;
 	size_t				index;
 	int					eof;
