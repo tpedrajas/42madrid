@@ -1,31 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ullonglen_base_extra.c                          :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tompedra <tompedra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/13 20:46:47 by tompedra          #+#    #+#             */
-/*   Updated: 2022/05/13 21:51:28 by tompedra         ###   ########.fr       */
+/*   Created: 2022/03/25 21:55:26 by tompedra          #+#    #+#             */
+/*   Updated: 2022/05/22 00:27:45 by tompedra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_ullonglen_base_extra(size_t n, size_t base)
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
-	int		result;
+	size_t	dst_len;
+	size_t	src_len;
+	size_t	max_append;
 
-	if (!base)
-		result = -1;
-	else
+	dst_len = ft_strlen(dst);
+	src_len = ft_strlen(src);
+	if (dstsize && dst_len < dstsize)
 	{
-		result = !n;
-		while (n)
-		{
-			result++;
-			n /= base;
-		}
+		max_append = dstsize - dst_len - 1;
+		if (max_append > src_len)
+			max_append = src_len;
+		dst += dst_len;
+		while (max_append--)
+			*(dst++) = *(src++);
+		*dst = '\0';
 	}
-	return (result);
+	else
+		dst_len = dstsize;
+	return (src_len + dst_len);
 }

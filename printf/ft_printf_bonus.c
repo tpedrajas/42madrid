@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_printf_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tompedra <tompedra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/25 20:30:32 by tompedra          #+#    #+#             */
-/*   Updated: 2022/05/21 22:07:04 by tompedra         ###   ########.fr       */
+/*   Created: 2022/05/21 23:13:47 by tompedra          #+#    #+#             */
+/*   Updated: 2022/05/21 23:14:13 by tompedra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "libftprintf_bonus.h"
 
 static int	ft_process_input(const char *format, va_list params)
 {

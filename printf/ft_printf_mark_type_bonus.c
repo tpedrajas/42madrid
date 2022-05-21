@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_param_type.c                             :+:      :+:    :+:   */
+/*   ft_printf_mark_type_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tompedra <tompedra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/13 16:53:07 by tompedra          #+#    #+#             */
-/*   Updated: 2022/05/18 20:26:25 by tompedra         ###   ########.fr       */
+/*   Created: 2022/05/21 23:16:26 by tompedra          #+#    #+#             */
+/*   Updated: 2022/05/21 23:16:46 by tompedra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libftprintf_bonus.h"
 
-int	ft_combine_str_param(const char *param, const char format)
+char	*ft_get_str_datatype(const char *param, const char format)
 {
 	char	*str_result;
 	int		result;
@@ -31,18 +31,18 @@ int	ft_combine_str_param(const char *param, const char format)
 	return (result);
 }
 
-int	ft_combine_ullong_param(size_t param, const char format)
+char	*ft_get_nbr_datatype(size_t param)
 {
 	int	result;
 
-	result = ft_ullonglen_base_extra(param, 10);
+	result = ft_nbrlen_base_extra(param, 10);
 	return (0);
 }
 
-int	ft_combine_hex_param(size_t param, char format)
+char	*ft_get_hex_datatype(size_t param, const char format)
 {
 	int	result;
 
-	result = ft_ullonglen_base_extra(param, 16);
+	result = ft_nbrlen_base_extra(param, 16);
 	return (0);
 }

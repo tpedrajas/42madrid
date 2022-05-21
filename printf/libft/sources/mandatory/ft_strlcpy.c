@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tompedra <tompedra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/25 20:30:36 by tompedra          #+#    #+#             */
-/*   Updated: 2022/05/13 22:00:32 by tompedra         ###   ########.fr       */
+/*   Created: 2022/03/25 21:55:31 by tompedra          #+#    #+#             */
+/*   Updated: 2022/05/22 00:27:57 by tompedra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "libft.h"
 
-# include "./libft/libft.h"
-# include <stdarg.h>
-# include <unistd.h>
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+{
+	size_t	src_len;
 
-int	ft_combine_str_param(const char *param, const char format);
-int	ft_combine_llong_param(int param);
-int	ft_combine_hex_param(unsigned int param);
-
-int	ft_printf(char const *format, ...);
-
-#endif
+	src_len = ft_strlen(src);
+	if (dstsize)
+	{
+		while (--dstsize && *src)
+			*(dst++) = *(src++);
+		*dst = '\0';
+	}
+	return (src_len);
+}

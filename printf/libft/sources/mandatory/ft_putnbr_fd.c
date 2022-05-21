@@ -1,45 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tompedra <tompedra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/27 15:22:14 by tompedra          #+#    #+#             */
-/*   Updated: 2022/05/13 21:43:28 by tompedra         ###   ########.fr       */
+/*   Created: 2022/03/27 15:23:26 by tompedra          #+#    #+#             */
+/*   Updated: 2022/04/19 23:47:16 by tompedra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void	ft_itoa_rec(char *str, unsigned int n, int index)
+static void	ft_putnbr_fd_rec(unsigned int n, int index, int fd)
 {
 	if (n < 10)
-		str[index] = n + '0';
+		ft_putchar_fd(n + '0', fd);
 	else
 	{
-		ft_itoa_rec(str, n / 10, index - 1);
-		str[index] = (n % 10) + '0';
+		ft_putnbr_fd_rec(n / 10, index - 1, fd);
+		ft_putchar_fd((n % 10) + '0', fd);
 	}
 }
 
-char	*ft_itoa(int n)
+void	ft_putnbr_fd(int n, int fd)
 {
+	size_t			uintn_len;
 	unsigned int	uintn;
 	int				sign;
-	size_t			result_len;
-	char			*result;
 
-	sign = ft_nbrsign(n);
-	uintn = sign * n;
-	result_len = ft_snbrlen_base(uintn, 10) + (sign < 0);
-	result = (char *)malloc(sizeof(char) * (result_len + 1));
-	if (result)
+	if (!write(fd, NULL, 0))
 	{
+		sign = ft_nbrsign(n);
+		uintn = sign * n;
+		uintn_len = ft_nbrlen_base(uintn, 10) + (sign < 0);
 		if (sign < 0)
-			result[0] = '-';
-		result[result_len] = 0;
-		ft_itoa_rec(result, uintn, result_len - 1);
+			ft_putchar_fd('-', fd);
+		ft_putnbr_fd_rec(uintn, uintn_len - 1, fd);
 	}
-	return (result);
 }

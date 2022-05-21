@@ -6,11 +6,11 @@
 /*   By: tompedra <tompedra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 20:46:47 by tompedra          #+#    #+#             */
-/*   Updated: 2022/05/18 23:48:48 by tompedra         ###   ########.fr       */
+/*   Updated: 2022/05/21 00:11:52 by tompedra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "libft.h"
 
 int	ft_snbrlen_base(ssize_t sn, size_t base)
 {
