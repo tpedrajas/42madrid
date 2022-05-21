@@ -1,32 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_snbrlen_base.c                                  :+:      :+:    :+:   */
+/*   ft_nbrsign.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tompedra <tompedra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/13 20:46:47 by tompedra          #+#    #+#             */
-/*   Updated: 2022/05/18 23:48:48 by tompedra         ###   ########.fr       */
+/*   Created: 2022/05/18 18:41:44 by tompedra          #+#    #+#             */
+/*   Updated: 2022/05/21 00:11:47 by tompedra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "libft.h"
 
-int	ft_snbrlen_base(ssize_t sn, size_t base)
+int	nbrsign(ssize_t sn)
 {
-	size_t	n;
-	int		result;
+	int	result;
 
-	result = -1;
-	if (base)
-	{
-		n = sn * ft_nbrsign(sn);
-		result = !n + (sn < 0);
-		while (n)
-		{
-			result++;
-			n /= base;
-		}
-	}
+	result = 1 - ((sn < 0) << 1);
 	return (result);
 }
