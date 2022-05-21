@@ -62,7 +62,7 @@ LIBNAME = libft.a
 
 # SOURCES ----------------------------------------------------------------------
 
-E_SRCS_FILES = ft_nbrlen_base ft_snbrlen_base ft_nbrsign
+E_SRCS_FILES = ft_nbrlen_base ft_snbrlen_base ft_nbrsign ft_ltoa
 
 E_SRCS = $(addprefix $(E_SRCS_DIR)/, $(addsuffix .c, $(E_SRCS_FILES)))
 
