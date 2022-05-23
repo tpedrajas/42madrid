@@ -11,113 +11,114 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include "get_next_line_internal.h"
 
-static void	clear_line_data(t_line_list **lst)
+static void	clear_line_data(t_line_list *lst)
 {
-	t_line_list	*last;
+	t_data_node	*last;
 	size_t		last_index;
 	size_t		root_index;
 
-	last = *lst;
-	while (last->next)
-		last = last->next;
-	last_index = 1;
-	while (last_index <= BUFFER_SIZE && last->data[last_index - 1] != '\n')
-		last_index++;
-	root_index = 0;
-	while (last_index < BUFFER_SIZE && last->data[last_index])
-		(*lst)->data[root_index++] = last->data[last_index++];
-	(*lst)->data[root_index] = '\0';
-	(*lst)->index = root_index;
-	if (!root_index)
-		ft_lstclear(lst);
-	else
-		ft_lstclear(&(*lst)->next);
+	if (lst->node)
+	{
+		last = lst->node;
+		while (last->next)
+			last = last->next;
+		last_index = 1;
+		while (last_index <= BUFFER_SIZE && last->data[last_index - 1] != '\n')
+			last_index++;
+		root_index = 0;
+		while (last_index < BUFFER_SIZE && last->data[last_index])
+			lst->node->data[root_index++] = last->data[last_index++];
+		lst->node->data[root_index] = '\0';
+		lst->node->index = root_index;
+		ft_node_clear(lst);
+	}
 }
 
-static char	*get_line_data(t_line_list **lst, size_t line_size)
+static char	*get_line_data(t_line_list *lst)
 {
-	t_line_list	*current;
+	t_data_node	*current;
 	size_t		index;
 	char		*result;
 
 	result = NULL;
-	if (!(*lst)->error && line_size)
+	if (!(lst->status & ls_error) && lst->size)
 	{
-		result = (char *)malloc(sizeof(char) * (line_size + 1));
+		result = (char *)malloc(sizeof(char) * (lst->size + 1));
 		if (result)
 		{
-			current = *lst;
 			index = 0;
-			while (current && index < line_size)
+			current = lst->node;
+			while (current && index < lst->size)
 			{
-				index += ft_lstcpy_data(current, &result[index]);
+				index += ft_node_cpydata(current, &result[index]);
 				current = current->next;
 			}
-			result[line_size] = '\0';
+			result[lst->size] = '\0';
 		}
 	}
 	return (result);
 }
 
-static t_line_list	*add_line_data(t_line_list *lst, int fd)
+static t_data_node	*inc_line_data(t_line_list *lst, t_data_node *node, int fd)
 {
-	t_line_list	*result;
+	t_data_node	*result;
 
-	result = lst;
-	if (lst->index < BUFFER_SIZE)
-		ft_lstadd_data(result, fd);
+	if (node->index < BUFFER_SIZE)
+	{
+		lst->status = ft_node_incdata(node, fd);
+		result = node;
+	}
 	else
 	{
-		result = ft_lstnew(fd);
-		if (result)
-			lst->next = result;
+		result = ft_node_new(lst, fd);
+		node->next = result;
 	}
+	if (lst->status & ls_error)
+		result = NULL;
 	return (result);
 }
 
-static int	exists_endl(t_line_list *lst, size_t *line_size)
+static int	check_line_endl(t_line_list *lst, t_data_node *node)
 {
-	char	*data;
 	size_t	index;
 	size_t	check_len;
 	int		result;
 
-	result = lst->eof;
-	if (!result)
+	result = 0;
+	index = lst->size % BUFFER_SIZE;
+	check_len = 0;
+	while (!result && index < BUFFER_SIZE && node->data[index])
 	{
-		data = lst->data;
-		index = *line_size % BUFFER_SIZE;
-		check_len = 0;
-		while (!result && index < BUFFER_SIZE && data[index])
-		{
-			check_len++;
-			result = (data[index++] == '\n');
-		}
-		*line_size += check_len;
+		check_len++;
+		result = node->data[index++] == '\n';
 	}
+	lst->size += check_len;
 	return (result);
 }
 
 char	*get_next_line(int fd)
 {
-	static t_line_list	*list;
-	t_line_list			*current;
-	size_t				result_len;
+	static t_line_list	list;
+	t_data_node			*current;
 	char				*result;
 
 	result = NULL;
-	if (!list)
-		list = ft_lstnew(fd);
-	if (list)
+	if (!read(fd, NULL, 0) && !(list.status & ls_eof))
 	{
-		current = list;
-		result_len = 0;
-		while (current && !current->error && !exists_endl(current, &result_len))
-			current = add_line_data(current, fd);
-		list->error = (!current || current->error);
-		result = get_line_data(&list, result_len);
-		clear_line_data(&list);
+		list.status = ls_eof & list.status;
+		list.size = 0;
+		if (!list.node)
+			list.node = ft_node_new(&list, fd);
+		current = list.node;
+		if (current)
+		{
+			while (!list.status && !check_line_endl(&list, current))
+				current = inc_line_data(&list, current, fd);
+			result = get_line_data(&list);
+			clear_line_data(&list);
+		}
 	}
 	return (result);
 }

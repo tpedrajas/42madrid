@@ -6,125 +6,127 @@
 /*   By: tompedra <tompedra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 21:50:14 by tompedra          #+#    #+#             */
-/*   Updated: 2022/05/22 01:44:19 by tompedra         ###   ########.fr       */
+/*   Updated: 2022/05/23 05:57:55 by tompedra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
+#include "get_next_line_internal_bonus.h"
 
-static void	clear_line_data(t_fd_list **lst, t_fd_list *current)
+static void	clear_line_data(t_line_list *lst)
 {
-	t_line_list	*last;
+	t_data_node	*last;
 	size_t		last_index;
 	size_t		root_index;
 
-	last = current->line;
-	while (last->next)
-		last = last->next;
-	last_index = 1;
-	while (last_index <= BUFFER_SIZE && last->data[last_index - 1] != '\n')
-		last_index++;
-	root_index = 0;
-	while (last_index < BUFFER_SIZE && last->data[last_index])
-		current->line->data[root_index++] = last->data[last_index++];
-	current->line->data[root_index] = '\0';
-	current->line->index = root_index;
-	while ((*lst)->fd != current->fd && (*lst)->next)
-		lst = &(*lst)->next;
-	if (!root_index)
-		ft_lstclear(lst, &current->line, root_index);
-	else
-		ft_lstclear(lst, &current->line->next, root_index);
+	if (lst->node)
+	{
+		last = lst->node;
+		while (last->next)
+			last = last->next;
+		last_index = 1;
+		while (last_index <= BUFFER_SIZE && last->data[last_index - 1] != '\n')
+			last_index++;
+		root_index = 0;
+		while (last_index < BUFFER_SIZE && last->data[last_index])
+			lst->node->data[root_index++] = last->data[last_index++];
+		lst->node->data[root_index] = '\0';
+		lst->node->index = root_index;
+		ft_node_clear(lst);
+	}
 }
 
-static char	*get_line_data(t_line_list *lst, size_t line_size)
+static char	*get_line_data(t_line_list *lst)
 {
-	t_line_list	*current;
+	t_data_node	*current;
 	size_t		index;
 	char		*result;
 
 	result = NULL;
-	if (!lst->error && line_size)
+	if (!(lst->status & ls_error) && lst->size)
 	{
-		result = (char *)malloc(sizeof(char) * (line_size + 1));
+		result = (char *)malloc(sizeof(char) * (lst->size + 1));
 		if (result)
 		{
-			current = lst;
 			index = 0;
-			while (current && index < line_size)
+			current = lst->node;
+			while (current && index < lst->size)
 			{
-				index += ft_lstcpy_data(current, &result[index]);
+				index += ft_node_cpydata(current, &result[index]);
 				current = current->next;
 			}
-			result[line_size] = '\0';
+			result[lst->size] = '\0';
 		}
 	}
 	return (result);
 }
 
-static t_line_list	*add_line_data(t_line_list *lst, int fd)
+static t_data_node	*inc_line_data(t_line_list *lst, t_data_node *node, int fd)
 {
-	t_line_list	*result;
+	t_data_node	*result;
 
-	result = lst;
-	if (lst->index < BUFFER_SIZE)
-		ft_lstadd_data(result, fd);
+	if (node->index < BUFFER_SIZE)
+	{
+		lst->status = ft_node_incdata(node, fd);
+		result = node;
+	}
 	else
 	{
-		result = (t_line_list *)malloc(sizeof(t_line_list) * 1);
+		result = (t_data_node *)malloc(sizeof(t_data_node) * 1);
 		if (result)
 		{
 			result->next = NULL;
 			result->index = 0;
-			ft_lstadd_data(result, fd);
-			lst->next = result;
+			lst->status = ft_node_incdata(result, fd);
+			node->next = result;
 		}
+		else
+			lst->status |= ls_error;
 	}
+	if (lst->status & ls_error)
+		result = NULL;
 	return (result);
 }
 
-static int	exists_endl(t_line_list *lst, size_t *line_size)
+static int	check_line_endl(t_line_list *lst, t_data_node *node)
 {
-	char	*data;
 	size_t	index;
 	size_t	check_len;
 	int		result;
 
-	result = lst->eof;
-	if (!result)
+	result = 0;
+	index = lst->size % BUFFER_SIZE;
+	check_len = 0;
+	while (!result && index < BUFFER_SIZE && node->data[index])
 	{
-		data = lst->data;
-		index = *line_size % BUFFER_SIZE;
-		check_len = 0;
-		while (!result && index < BUFFER_SIZE && data[index])
-		{
-			check_len++;
-			result = data[index++] == '\n';
-		}
-		*line_size += check_len;
+		check_len++;
+		result = node->data[index++] == '\n';
 	}
+	lst->size += check_len;
 	return (result);
 }
 
 char	*get_next_line(int fd)
 {
-	static t_fd_list	*lst;
-	t_fd_list			*current;
-	t_line_list			*line;
-	size_t				result_len;
+	static t_line_list	list[FOPEN_MAX];
+	t_data_node			*current;
 	char				*result;
 
 	result = NULL;
-	current = ft_lstget(&lst, fd);
-	if (current)
+	if (!read(fd, NULL, 0) && !(list[fd].status & ls_eof))
 	{
-		line = current->line;
-		result_len = 0;
-		while (line && !line->error && !exists_endl(line, &result_len))
-			line = add_line_data(line, fd);
-		current->line->error = (!line || line->error);
-		result = get_line_data(current->line, result_len);
-		clear_line_data(&lst, current);
+		list[fd].status = ls_eof & list[fd].status;
+		list[fd].size = 0;
+		if (!list[fd].node)
+			list[fd].node = ft_node_new(&list[fd], fd);
+		current = list[fd].node;
+		if (current)
+		{
+			while (!list[fd].status && !check_line_endl(&list[fd], current))
+				current = inc_line_data(&list[fd], current, fd);
+			result = get_line_data(&list[fd]);
+			clear_line_data(&list[fd]);
+		}
 	}
 	return (result);
 }

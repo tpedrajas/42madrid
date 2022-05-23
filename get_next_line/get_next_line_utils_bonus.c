@@ -6,116 +6,82 @@
 /*   By: tompedra <tompedra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 00:54:19 by tompedra          #+#    #+#             */
-/*   Updated: 2022/05/11 22:21:58 by tompedra         ###   ########.fr       */
+/*   Updated: 2022/05/23 06:01:20 by tompedra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
+#include "get_next_line_internal_bonus.h"
 
-void	ft_lstclear(t_fd_list **lst, t_line_list **line, size_t data_index)
+void	ft_node_clear(t_line_list *lst)
 {
-	t_fd_list	*delete;
-	t_line_list	*current;
-	t_line_list	*previous;
+	t_data_node	*current;
+	t_data_node	*delete_node;
 
-	current = *line;
-	while (current)
+	if (!lst->node->index)
 	{
-		previous = current;
-		current = current->next;
-		free(previous);
+		delete_node = lst->node;
+		lst->node = NULL;
 	}
-	*line = NULL;
-	if (!data_index)
+	else
 	{
-		delete = *lst;
-		*lst = delete->next;
-		free(delete);
+		delete_node = lst->node->next;
+		lst->node->next = NULL;
+	}
+	while (delete_node)
+	{
+		current = delete_node->next;
+		free(delete_node);
+		delete_node = current;
 	}
 }
 
-size_t	ft_lstcpy_data(t_line_list *lst, char *dest)
+size_t	ft_node_cpydata(t_data_node *node, char *dest)
 {
-	size_t	result;
 	int		end_cpy;
+	size_t	result;
 
 	result = 0;
 	end_cpy = 0;
-	while (!end_cpy && result < BUFFER_SIZE && lst->data[result])
+	while (!end_cpy && result < BUFFER_SIZE && node->data[result])
 	{
-		dest[result] = lst->data[result];
-		end_cpy = lst->data[result++] == '\n';
+		dest[result] = node->data[result];
+		end_cpy = (node->data[result++] == '\n');
 	}
 	return (result);
 }
 
-void	ft_lstadd_data(t_line_list *lst, int fd)
+int	ft_node_incdata(t_data_node *node, int fd)
 {
 	char	*data;
-	ssize_t	read_result;
 	size_t	index;
+	ssize_t	read_result;
+	int		result;
 
-	data = lst->data;
+	data = node->data;
 	index = BUFFER_SIZE;
-	while (index > lst->index)
+	while (index > node->index)
 		data[--index] = '\0';
 	read_result = read(fd, &data[index], BUFFER_SIZE - index);
-	lst->eof = !read_result;
-	lst->error = read_result < 0;
-	if (!lst->error)
-		lst->index += (BUFFER_SIZE - index);
+	result = 0;
+	result |= ls_eof * !read_result;
+	result |= ls_error * (read_result < 0);
+	node->index += read_result;
+	return (result);
 }
 
-t_fd_list	*ft_lstnew(int fd)
+t_data_node	*ft_node_new(t_line_list *lst, int fd)
 {
-	t_line_list	*line;
-	t_fd_list	*result;
+	t_data_node	*result;
 
-	result = (t_fd_list *)malloc(sizeof(t_fd_list) * 1);
+	result = (t_data_node *)malloc(sizeof(t_data_node) * 1);
 	if (result)
 	{
 		result->next = NULL;
-		result->fd = fd;
-		line = (t_line_list *)malloc(sizeof(t_line_list) * 1);
-		if (line)
-		{
-			line->next = NULL;
-			line->index = 0;
-			ft_lstadd_data(line, fd);
-			result->line = line;
-		}
-		else
-		{
-			free(result);
-			result = NULL;
-		}
+		result->index = 0;
+		lst->status = ft_node_incdata(result, fd);
 	}
-	return (result);
-}
-
-t_fd_list	*ft_lstget(t_fd_list **lst, int fd)
-{
-	t_fd_list	*result;
-
-	result = NULL;
-	if (!read(fd, NULL, 0))
-	{
-		if (!(*lst))
-		{
-			*lst = ft_lstnew(fd);
-			result = *lst;
-		}
-		else
-		{
-			result = *lst;
-			while (result->fd != fd && result->next)
-				result = result->next;
-			if (result->fd != fd)
-			{
-				result->next = ft_lstnew(fd);
-				result = result->next;
-			}
-		}
-	}
+	else
+		lst->status |= ls_error;
 	return (result);
 }
