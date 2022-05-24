@@ -6,12 +6,11 @@
 /*   By: tompedra <tompedra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 00:54:19 by tompedra          #+#    #+#             */
-/*   Updated: 2022/05/23 06:01:20 by tompedra         ###   ########.fr       */
+/*   Updated: 2022/05/24 13:13:58 by tompedra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
-#include "get_next_line_internal_bonus.h"
 
 void	ft_node_clear(t_line_list *lst)
 {

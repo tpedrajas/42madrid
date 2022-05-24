@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include "get_next_line_internal.h"
 
 static void	clear_line_data(t_line_list *lst)
 {

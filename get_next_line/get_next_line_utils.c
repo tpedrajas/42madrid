@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include "get_next_line_internal.h"
 
 void	ft_node_clear(t_line_list *lst)
 {
