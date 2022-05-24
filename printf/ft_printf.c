@@ -6,8 +6,7 @@
 /*   By: tompedra <tompedra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 20:30:32 by tompedra          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/05/21 22:07:04 by tompedra         ###   ########.fr       */
+/*   Updated: 2022/05/24 16:56:11 by tompedra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +34,6 @@ static int	ft_process_input(const char *format, va_list params)
 	}
 	return (result);
 }
-=======
-/*   Updated: 2022/05/19 23:47:59 by tompedra         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "ft_printf.h"
-
-static t_mark **ft_get_marks(char const )
->>>>>>> b8e5cdc60d0aa779e2023b6d56733125768d2d50
 
 int	ft_printf(char const *format, ...)
 {
